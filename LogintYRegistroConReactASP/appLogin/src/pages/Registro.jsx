@@ -13,58 +13,61 @@ function Registro() {
   const [nombre, SetNombre] = useState("");
   const [apellido, SetApellido] = useState("");
   const [edad, SetEdad] = useState("");
-  const [cedula, SetCedula] = useState("");
   const [correo, SetCorreo] = useState("");
   const [usuario, SetUsuario] = useState("");
   const [direccion, SetDireccion] = useState("");
   const [contrasena, SetContrasena] = useState("");
   const [confirmarContrasena, setConfirmarContrasena] = useState("");
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    if (
-      !nombre ||
-      !apellido ||
-      !edad ||
-      !cedula ||
-      !correo ||
-      !usuario ||
-      !direccion ||
-      !contrasena ||
-      !confirmarContrasena
-    ) {
-      toast.warn("Por favor, completa todos los campos.");
-      return;
+  if (
+    !nombre ||
+    !apellido ||
+    !edad ||
+    !correo ||
+    !usuario ||
+    !direccion ||
+    !contrasena ||
+    !confirmarContrasena
+  ) {
+    toast.warn("Por favor, completa todos los campos.");
+    return;
+  }
+
+  if (contrasena !== confirmarContrasena) {
+    toast.error("Las contraseñas no coinciden.");
+    return;
+  }
+
+  // Llamada al servicio
+  const resultado = await RegisterUser(
+    nombre,
+    apellido,
+    edad,
+    correo,
+    usuario,
+    direccion,
+    contrasena
+  );
+
+  // 🔽 Aquí va el bloque que preguntabas 🔽
+  if (!resultado.ok) {
+    if (resultado.tipo === "warning") {
+      toast.warn(resultado.mensaje);
+    } else {
+      toast.error(resultado.mensaje);
     }
+    return;
+  }
 
-    if (contrasena !== confirmarContrasena) {
-      toast.error("Las contraseñas no coinciden.");
-      return;
-    }
+  // Registro exitoso
+  toast.success(resultado.mensaje);
+  localStorage.setItem("user", JSON.stringify(resultado.data)); // si envías datos del usuario
+  navigate("/");
+};
 
-    try {
-      const data = await RegisterUser(
-        nombre,
-        apellido,
-        edad,
-        cedula,
-        correo,
-        usuario,
-        direccion,
-        contrasena
-      );
-
-      toast.success("Registro exitoso");
-
-      // Guardar el usuario completo en localStorage como objeto JSON
-      localStorage.setItem("user", JSON.stringify(data));
-
-      navigate("/");
-    } catch (error) {
-      toast.error("Error al registrar: " + error.message);
-    }
-  };
 
   return (
     <div className="container d-flex justify-content-center align-items-center min-vh-100">
@@ -132,23 +135,7 @@ function Registro() {
               </div>
             </div>
             
-            <div className="mb-3">
-              <label htmlFor="ced" className="form-label">
-                Cedula
-              </label>
-              <div className="input-group">
-                <span className="input-group-text">
-                  <i className="bi bi-person-vcard"></i>
-                </span>
-                <input
-                  type="text"
-                  className="form-control"
-                  id="ced"
-                  placeholder="Ingrese su cedula"
-                  onChange={(e) => SetCedula(e.target.value)}
-                />
-              </div>
-            </div>
+            
             
             <div className="mb-3">
               <label htmlFor="correo" className="form-label">

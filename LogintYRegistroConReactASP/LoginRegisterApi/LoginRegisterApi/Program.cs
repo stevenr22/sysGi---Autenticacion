@@ -16,8 +16,8 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowFrontend", policy =>
     {
         policy.WithOrigins(
-                "http://localhost:5173",
-                "https://f5f0-2800-bf0-8269-10cd-a8b-6422-c85-dad0.ngrok-free.app" //ENDPOINT DE NGROK DEL FRONT (VARIA AL INICIAR EL NGROK)
+                "http://localhost:5173"
+                // "https://f5f0-2800-bf0-8269-10cd-a8b-6422-c85-dad0.ngrok-free.app" //ENDPOINT DE NGROK DEL FRONT (VARIA AL INICIAR EL NGROK)
             )
             .AllowAnyMethod()
             .AllowAnyHeader();

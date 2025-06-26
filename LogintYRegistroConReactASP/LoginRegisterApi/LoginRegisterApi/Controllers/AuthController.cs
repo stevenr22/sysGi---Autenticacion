@@ -22,70 +22,98 @@ namespace AspNetCoreWebApi.Controllers
         //POST: api/login
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginRequest request)
-
         {
-            //BUSCA EL USUARIO EN LA BASE DE DATOS CON ESTADO ACTIVO
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(u =>
-                u.NomUserUsu == request.User &&
-                u.ContraUsu == request.Password &&
-                u.EstadoUsu == 1);
-            //SI NO SE ENCONTRO DEVUELVE ERROR
-            if (usuario == null)
+            try
             {
-                return Unauthorized("Credenciales incorrectas");
+                var usuario = await _context.Usuarios
+                    .FirstOrDefaultAsync(u =>
+                        u.UserNameUsu == request.User &&
+                        u.ContraUsu == request.Password &&
+                        u.EstadoUsu == 1);
+
+                if (usuario == null)
+                {
+                    return Unauthorized(new
+                    {
+                        tipo = "warning",
+                        mensaje = "Credenciales incorrectas o usuario inactivo"
+                    });
+                }
+
+                return Ok(new
+                {
+                    id = usuario.IdUsu,
+                    nombre = usuario.NomUsu,
+                    apellido = usuario.ApeUsu,
+                    mensaje = "Inicio de sesión exitoso"
+                });
             }
-
-            //SI TODO ESTA BIEN DEVUELVE DATOS BASIDOS DEL USUARIO
-            return Ok(new
+            catch (Exception ex)
             {
-                id = usuario.IdUsu,
-                nombre = usuario.NomUsu,
-                apellido = usuario.ApeUsu
-            });
-
+                return StatusCode(500, new
+                {
+                    tipo = "error",
+                    mensaje = "Error interno del servidor",
+                    detalle = ex.Message
+                });
+            }
         }
+
 
 
 
         //API REGISTER
         //POST: api/register
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] RegisterRequest request)
+        public async Task<IActionResult> Registrar([FromBody] RegisterRequest request)
         {
-            // Validar si el usuario ya existe
-            if (await _context.Usuarios.AnyAsync(u => u.NomUserUsu == request.Usuario))
-                return BadRequest("El usuario ya existe.");
-
-            // Validar si la cédula ya existe
-            if (await _context.Usuarios.AnyAsync(u => u.CedulaUsu == request.Cedula))
-                return BadRequest("La cédula ya está registrada.");
-
-            // Validar si el correo ya existe
-            if (await _context.Usuarios.AnyAsync(u => u.CorreoUsu == request.Correo))
-                return BadRequest("El correo ya está registrado.");
-
-            var usuario = new Usuario
+            try
             {
-                NomUsu = request.Nombre,
-                ApeUsu = request.Apellido,
-                DirUsu = request.Direccion,
-                NomUserUsu = request.Usuario,
-                ContraUsu = request.Contrasena,
-                CedulaUsu = request.Cedula,
-                EdadUsu = request.Edad,
-                CorreoUsu = request.Correo,
-                
-            };
+                // Validar si el nombre de usuario ya existe
+                if (await _context.Usuarios.AnyAsync(u => u.UserNameUsu == request.Usuario))
+                {
+                    return BadRequest(new { tipo = "warning", mensaje = "El usuario ya existe." });
+                }
 
-            _context.Usuarios.Add(usuario);
-            await _context.SaveChangesAsync();
+                // Validar si el correo ya está registrado
+                if (await _context.Usuarios.AnyAsync(u => u.CorreoUsu == request.Correo))
+                {
+                    return BadRequest(new { tipo = "warning", mensaje = "El correo ya está registrado." });
+                }
 
-            return Ok(new { mensaje = "Usuario registrado correctamente" });
+                // Crear el nuevo usuario
+                var nuevoUsuario = new Usuario
+                {
+                    NomUsu = request.Nombre,
+                    ApeUsu = request.Apellido,
+                    EdadUsu = request.Edad,
+                    CorreoUsu = request.Correo,
+                    UserNameUsu = request.Usuario,
+                    DirUsu = request.Direccion,
+                    ContraUsu = request.Contrasena,
+                    IdRol = 2 // Rol por defecto
+                };
+
+                _context.Usuarios.Add(nuevoUsuario);
+                await _context.SaveChangesAsync();
+
+                return Ok(new { mensaje = "Usuario registrado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                // Captura cualquier error inesperado y devuelve error tipo "error"
+                return StatusCode(500, new
+                {
+                    tipo = "error",
+                    mensaje = "Error interno del servidor.",
+                    detalle = ex.Message // Puedes quitar esto en producción
+                });
+            }
         }
 
 
-       
+
+
 
     }
 }

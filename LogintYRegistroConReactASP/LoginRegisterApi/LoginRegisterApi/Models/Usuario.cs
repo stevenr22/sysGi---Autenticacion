@@ -14,20 +14,22 @@ namespace LoginRegisterApi.Models
         public string ApeUsu { get; set; } = string.Empty;
         [Required]
         public string DirUsu { get; set; } = string.Empty;
-        [Required]
-        public int CedulaUsu { get; set; }
+
         [Required]
         public int EdadUsu { get; set; }
         [Required]
-        public string NomUserUsu { get; set; } = string.Empty;
+        public string UserNameUsu { get; set; } = string.Empty;
         [Required]
         public string CorreoUsu { get; set; } = string.Empty;
         [Required]
         public string ContraUsu { get; set; } = string.Empty;
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)] // FECHA DE REGISTRO LA MANEJA LA BASE DE DATOS
-        public DateTime FechaRegUsu { get; set; } 
+        public DateTime FechaRegUsu { get; set; }
+        public int IdRol { get; set; } //FK EN USUARIO
+        
         [DatabaseGenerated(DatabaseGeneratedOption.Computed)] // ESTADO DE REGISTRO LA MANEJA LA BASE DE DATOS
         public int EstadoUsu { get; set; }
+      
 
     }
 }

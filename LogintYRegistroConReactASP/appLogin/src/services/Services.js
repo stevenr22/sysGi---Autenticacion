@@ -4,25 +4,30 @@ const API_URL = "http://localhost:5015/api/auth";
 
 export const loginUser = async (user, password) => {
   try {
-    // Solicitud POST al endpoint de login
     const response = await fetch(`${API_URL}/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
       },
       body: JSON.stringify({ user, password }),
-      
     });
-    if (!response.ok) {
-      throw new Error("Credenciales incorrectas o error del servidor");
-      
-    }
+
     const data = await response.json();
-    return data;
+
+    if (!response.ok) {
+      return { ok: false, tipo: data.tipo, mensaje: data.mensaje };
+    }
+
+    return { ok: true, mensaje: data.mensaje, data };
   } catch (error) {
-    throw new Error(error.message);
+    return {
+      ok: false,
+      tipo: "error",
+      mensaje: "No se pudo conectar al servidor",
+    };
   }
 };
+
 
 
 // REGISTRO
@@ -30,7 +35,6 @@ export const RegisterUser = async (
   nombre,
   apellido,
   edad,
-  cedula,
   correo,
   usuario,
   direccion,
@@ -47,21 +51,22 @@ export const RegisterUser = async (
         nombre,
         apellido,
         edad,
-        cedula,
         correo,
         usuario,
         direccion,
         contrasena,
       }),
     });
-    if (!response.ok) {
-      throw new Error("Credenciales incorrectas o error del servidor");
-    }
     const data = await response.json();
+    if (!response.ok) {
+      // Aquí devolvemos el tipo y mensaje para que el componente decida cómo mostrarlo
+      return { ok: false, tipo: data.tipo, mensaje: data.mensaje };
+    }
+    
    
-    return data;
+     return { ok: true, mensaje: data.mensaje }; // Registro exitoso
   } catch (error) {
-    throw new Error(error.message);
+    return { ok: false, tipo: "error", mensaje: "No se pudo conectar al servidor." };
   }
 
 };

@@ -11,31 +11,35 @@ function Login() {
   
   
 
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-  const handleSubmit = async(e) => {
-    e.preventDefault();
-    if (!user || !password) {
-      toast.warn("Por favor, completa todos los campos.");
-      return;
+  if (!user || !password) {
+    toast.warn("Por favor, completa todos los campos.");
+    return;
+  }
+
+  const resultado = await loginUser(user, password); // Llama al servicio
+
+  if (!resultado.ok) {
+    if (resultado.tipo === "warning") {
+      toast.warn(resultado.mensaje);
+    } else {
+      toast.error(resultado.mensaje);
     }
+    return;
+  }
 
+  // Inicio de sesión exitoso
+  toast.success(resultado.mensaje);
 
-    // Aquí podrías agregar la lógica de autenticación
-    try{
-      const data = await loginUser(user, password); //envio de datos a la API
-      toast.success("Inicio de sesión exitoso");
-      
-      //PUEDES GUARDAR LOS DATOS DEL USUARIO SI LOS DEVUELVE EL BACKEND
-      localStorage.setItem("user", JSON.stringify(data)); //almacenamos los datos del usuario en el localStorage
-      navigate("/dashboard"); //redireccionamos al usuario a la página de inicio
-      
-    } catch (error) {
-      toast.error("Error al iniciar sesión: " + error.message);
-     
-    }
+  // Guardamos los datos del usuario
+  localStorage.setItem("user", JSON.stringify(resultado.data));
 
+  // Redirigimos
+  navigate("/dashboard");
+};
 
-  };
 
   useEffect(() => {
     document.title = "Login .::. sysGi";

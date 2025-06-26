@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "/home/admin/Desktop/CODIGOS GENERALES/PROYECTOS_DONE/sysGi - Autenticacion/LogintYRegistroConReactASP/LoginRegisterApi/LoginRegisterApi/LoginRegisterApi.csproj": {}
+    "D:\\CODIGOS GENERALES\\PROYECTOS_DONE\\sysGi - Autenticacion\\LogintYRegistroConReactASP\\LoginRegisterApi\\LoginRegisterApi\\LoginRegisterApi.csproj": {}
   },
   "projects": {
-    "/home/admin/Desktop/CODIGOS GENERALES/PROYECTOS_DONE/sysGi - Autenticacion/LogintYRegistroConReactASP/LoginRegisterApi/LoginRegisterApi/LoginRegisterApi.csproj": {
+    "D:\\CODIGOS GENERALES\\PROYECTOS_DONE\\sysGi - Autenticacion\\LogintYRegistroConReactASP\\LoginRegisterApi\\LoginRegisterApi\\LoginRegisterApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/admin/Desktop/CODIGOS GENERALES/PROYECTOS_DONE/sysGi - Autenticacion/LogintYRegistroConReactASP/LoginRegisterApi/LoginRegisterApi/LoginRegisterApi.csproj",
+        "projectUniqueName": "D:\\CODIGOS GENERALES\\PROYECTOS_DONE\\sysGi - Autenticacion\\LogintYRegistroConReactASP\\LoginRegisterApi\\LoginRegisterApi\\LoginRegisterApi.csproj",
         "projectName": "LoginRegisterApi",
-        "projectPath": "/home/admin/Desktop/CODIGOS GENERALES/PROYECTOS_DONE/sysGi - Autenticacion/LogintYRegistroConReactASP/LoginRegisterApi/LoginRegisterApi/LoginRegisterApi.csproj",
-        "packagesPath": "/home/admin/.nuget/packages/",
-        "outputPath": "/home/admin/Desktop/CODIGOS GENERALES/PROYECTOS_DONE/sysGi - Autenticacion/LogintYRegistroConReactASP/LoginRegisterApi/LoginRegisterApi/obj/",
+        "projectPath": "D:\\CODIGOS GENERALES\\PROYECTOS_DONE\\sysGi - Autenticacion\\LogintYRegistroConReactASP\\LoginRegisterApi\\LoginRegisterApi\\LoginRegisterApi.csproj",
+        "packagesPath": "C:\\Users\\rojas\\.nuget\\packages\\",
+        "outputPath": "D:\\CODIGOS GENERALES\\PROYECTOS_DONE\\sysGi - Autenticacion\\LogintYRegistroConReactASP\\LoginRegisterApi\\LoginRegisterApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/admin/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\rojas\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
@@ -32,29 +32,24 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[8.0.5, )"
-            },
-            "Microsoft.EntityFrameworkCore.Tools": {
-              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
-              "suppressParent": "All",
-              "target": "Package",
-              "version": "[8.0.5, )"
-            },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
               "version": "[8.0.7, )"
             },
             "Pomelo.EntityFrameworkCore.MySql": {
               "target": "Package",
-              "version": "[8.0.0, )"
+              "version": "[8.0.3, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -80,7 +75,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.117/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.411/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
